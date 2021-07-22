@@ -28,6 +28,11 @@ namespace TaskManager.Api.Application.Tests
 
     public class AssignTaskToTeamMemberCommandHandler : IRequestHandler<AssignTaskToTeamMemberCommand, Unit>
     {
+        private readonly IApplicationDbContext _applicationDbContext;
+        public AssignTaskToTeamMemberCommandHandler(IApplicationDbContext applicationDbContext)
+        {
+            _applicationDbContext = applicationDbContext;
+        }
         public Task<Unit> Handle(AssignTaskToTeamMemberCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
@@ -96,7 +101,7 @@ namespace TaskManager.Api.Application.Tests
                 .Returns(Task.FromResult(0))
                 .Verifiable("Must save the resulting change");
 
-            var sut = new AssignTaskToTeamMemberCommandHandler();
+            var sut = new AssignTaskToTeamMemberCommandHandler(_applicationDbContext.Object);
             //Act
             var result = await sut.Handle(request, cancellationSource.Token);
             //Assert
