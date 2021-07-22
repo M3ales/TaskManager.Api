@@ -116,6 +116,7 @@ namespace TaskManager.Api.Application.Tests
             tasks.Count.Should().Be(1, "because you shouldn't be adding any new tasks");
             teamMembers.Count.Should().Be(1, "because you shouldn't be adding any new team members");
             tasks[0].AssignedTo.Should().Be(teamMembers[0], "because you should assign the team member to the task");
+            _applicationDbContext.Verify();
         }
         [Fact]
         public void Should_Add_Tasks()
