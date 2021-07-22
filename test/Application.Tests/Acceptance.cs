@@ -33,7 +33,7 @@ namespace TaskManager.Api.Application.Tests
         {
             _applicationDbContext = applicationDbContext;
         }
-        public Task<Unit> Handle(AssignTaskToTeamMemberCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AssignTaskToTeamMemberCommand request, CancellationToken cancellationToken)
         {
             // Going to pretend its hot path code and do a https://stackoverflow.com/questions/8663897/why-is-linq-wherepredicate-first-faster-than-firstpredicate
             var task = _applicationDbContext.TaskItems
@@ -43,7 +43,8 @@ namespace TaskManager.Api.Application.Tests
                 .Where(teamMember => teamMember.Id == request.TeamMemberId)
                 .First();
             task.AssignedTo = teamMember;
-            return Unit.Task;
+            await _applicationDbContext.SaveChangesAsync(cancellationToken);
+            return Unit.Value;
         }
     }
 
