@@ -35,7 +35,15 @@ namespace TaskManager.Api.Application.Tests
         }
         public Task<Unit> Handle(AssignTaskToTeamMemberCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            // Going to pretend its hot path code and do a https://stackoverflow.com/questions/8663897/why-is-linq-wherepredicate-first-faster-than-firstpredicate
+            var task = _applicationDbContext.TaskItems
+                .Where(task => task.Id == request.TaskId)
+                .First();
+            var teamMember = _applicationDbContext.TeamMembers
+                .Where(teamMember => teamMember.Id == request.TeamMemberId)
+                .First();
+            task.AssignedTo = teamMember;
+            return Unit.Task;
         }
     }
 
