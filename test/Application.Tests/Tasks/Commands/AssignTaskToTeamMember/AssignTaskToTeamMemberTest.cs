@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoFixture.Xunit2;
+using FluentAssertions;
 using Moq;
 using System.Collections.Generic;
 using System.Threading;
@@ -14,13 +15,16 @@ namespace TaskManager.Api.Application.Tests.Tasks.Commands.AssignTaskToTeamMembe
     {
         [AutoMoqData]
         [Theory(DisplayName = "Assign Tasks to Team Members")]
-        public async Task Should_Assign_Tasks_To_Team_Members(List<TaskItem> tasks, List<TeamMember> teamMembers, CancellationTokenSource cancellationSource)
+        public async Task Should_Assign_Tasks_To_Team_Members(
+            [Frozen] List<TaskItem> tasks, 
+            [Frozen] List<TeamMember> teamMembers, 
+            [Frozen] CancellationTokenSource cancellationSource)
         {
             //Arrange
             var request = new AssignTaskToTeamMemberCommand()
             {
-                TaskId = PickRandomElement(tasks).Id,
-                TeamMemberId = PickRandomElement(teamMembers).Id
+                TaskId = PickRandomElement(tasks, out int taskIndex).Id,
+                TeamMemberId = PickRandomElement(teamMembers, out int teamMemberIndex).Id
             };
 
             var _applicationDbContext = new Mock<IApplicationDbContext>();
@@ -43,7 +47,7 @@ namespace TaskManager.Api.Application.Tests.Tasks.Commands.AssignTaskToTeamMembe
             var result = await sut.Handle(request, cancellationSource.Token);
 
             //Assert
-            tasks[0].AssignedTo.Should().Be(teamMembers[0], "because you should assign the team member to the task");
+            tasks[taskIndex].AssignedTo.Should().Be(teamMembers[teamMemberIndex], "because you should assign the team member to the task");
             _applicationDbContext.Verify();
         }
     }
