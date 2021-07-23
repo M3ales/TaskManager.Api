@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace TaskManager.Api.Application
 {
@@ -11,6 +13,7 @@ namespace TaskManager.Api.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;
         }
     }
