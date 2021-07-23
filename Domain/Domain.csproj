@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>TaskManager.Api.Domain</AssemblyName>
+    <RootNamespace>TaskManager.Api.Domain</RootNamespace>
+  </PropertyGroup>
+
+</Project>
