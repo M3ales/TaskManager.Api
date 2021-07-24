@@ -18,7 +18,7 @@ namespace TaskManager.Api.Application.Tests
         public AutoMoqDataAttribute() : base(() =>
         {
             var fixture = new Fixture();
-            fixture.Customize(new AutoMoqCustomization() { ConfigureMembers=true });
+            fixture.Customize(new AutoMoqCustomization() { ConfigureMembers = true });
             return fixture;
         })
         { }

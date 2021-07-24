@@ -68,7 +68,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.CreateWorkItem
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(new List<TeamMember>() { new TeamMember() { Id = request.AssignedTo ?? 0 } });
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(applicationDbContext.Object.WorkItems.Count)
-                .Callback(()=>
+                .Callback(() =>
                 {
                     workItems[0].Id = workItemGeneratedId;
                 });

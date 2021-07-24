@@ -38,18 +38,9 @@ namespace TaskManager.Api.Application.Tests
 
             //Assert
         }
-        
+
         [Fact]
         public void Should_Modify_WorkItems()
-        {
-            //Arrange
-
-            //Act
-
-            //Assert
-        }
-        [Fact]
-        public void Should_Remove_WorkItems()
         {
             //Arrange
 
