@@ -40,7 +40,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             Func<Task<int>> result = () => sut.Handle(request, cancellationSource.Token);
 
             //Assert
-            result.Should().ThrowAsync<NotFoundException>("because the requested team member does not exist");
+            result.Should().Throw<NotFoundException>("because the requested team member does not exist");
         }
 
         [AutoMoqData]
