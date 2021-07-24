@@ -13,7 +13,7 @@ using Xunit;
 
 namespace TaskManager.Api.Application.Tests.WorkItems.Commands.AssignWorkItemToTeamMember
 {
-    public class AssignWorkItemToTeamMemberTest : TestBase
+    public class AssignWorkItemToTeamMemberTests : TestBase
     {
         [AutoMoqData]
         [InlineAutoMoqData]
