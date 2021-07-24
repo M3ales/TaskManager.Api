@@ -39,7 +39,10 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetAllWorkItems
             var result = await sut.Handle(request, cancellationSource.Token);
 
             //Assert
-            result.Should().BeEquivalentTo(mapper.ProjectTo<ShallowWorkItemDto>(workItems.AsQueryable()).ToList(), "because it should return the equivalent of the requested work item as a DTO");
+            result.Should()
+                .BeEquivalentTo(mapper
+                    .ProjectTo<ShallowWorkItemDto>(
+                     workItems.AsQueryable()).ToList(), "because it should return the equivalent of the requested work item as a DTO");
         }
     }
 }
