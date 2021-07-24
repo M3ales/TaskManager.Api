@@ -7,34 +7,34 @@ using System.Threading;
 using System.Threading.Tasks;
 using TaskManager.Api.Application.Common.Exceptions;
 using TaskManager.Api.Application.Common.Interfaces;
-using TaskManager.Api.Application.Tasks.Commands.AssignTaskToTeamMember;
+using TaskManager.Api.Application.WorkItems.Commands.AssignWorkItemToTeamMember;
 using TaskManager.Api.Domain.Entities;
 using Xunit;
 
-namespace TaskManager.Api.Application.Tests.Tasks.Commands.AssignTaskToTeamMember
+namespace TaskManager.Api.Application.Tests.WorkItems.Commands.AssignWorkItemToTeamMember
 {
-    public class AssignTaskToTeamMemberTest : TestBase
+    public class AssignWorkItemToTeamMemberTest : TestBase
     {
         [AutoMoqData]
         [InlineAutoMoqData]
         [InlineAutoMoqData]
         [InlineAutoMoqData]
         [InlineAutoMoqData]
-        [Theory(DisplayName = "Assign Tasks to Team Members")]
-        public async Task Should_Assign_Tasks_To_Team_Members(
-            List<TaskItem> tasks,
+        [Theory(DisplayName = "Assign WorkItems to Team Members")]
+        public async Task Should_Assign_WorkItems_To_Team_Members(
+            List<WorkItem> workItems,
             List<TeamMember> teamMembers,
             CancellationTokenSource cancellationSource,
             [Frozen] Mock<IApplicationDbContext> applicationDbContext,
-            AssignTaskToTeamMemberCommandHandler sut)
+            AssignWorkItemToTeamMemberCommandHandler sut)
         {
             //Arrange
-            var request = new AssignTaskToTeamMemberCommand()
+            var request = new AssignWorkItemToTeamMemberCommand()
             {
-                TaskId = PickRandomElement(tasks, out int taskIndex).Id,
+                WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id,
                 TeamMemberId = PickRandomElement(teamMembers, out int teamMemberIndex).Id
             };
-            applicationDbContext.Setup(context => context.TaskItems).Returns(tasks);
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMembers);
             applicationDbContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(0))
@@ -44,7 +44,7 @@ namespace TaskManager.Api.Application.Tests.Tasks.Commands.AssignTaskToTeamMembe
             var result = await sut.Handle(request, cancellationSource.Token);
 
             //Assert
-            tasks[taskIndex].AssignedTo.Should().Be(teamMembers[teamMemberIndex], "because you should assign the team member to the task");
+            workItems[workItemIndex].AssignedTo.Should().Be(teamMembers[teamMemberIndex], "because you should assign the team member to the workitem");
             applicationDbContext.Verify();
         }
 
@@ -55,25 +55,25 @@ namespace TaskManager.Api.Application.Tests.Tasks.Commands.AssignTaskToTeamMembe
         [InlineAutoMoqData]
         [Theory(DisplayName = "Should Throw Team Member Not Found Exception")]
         public void Should_Throw_If_TeamMember_Not_Found(
-            List<TaskItem> tasks,
+            List<WorkItem> workItems,
             List<TeamMember> teamMembers,
             CancellationTokenSource cancellationSource,
             [Frozen] Mock<IApplicationDbContext> applicationDbContext,
-            AssignTaskToTeamMemberCommandHandler sut)
+            AssignWorkItemToTeamMemberCommandHandler sut)
         {
             //Arrange
             var teamMemberToRemove = PickRandomElement(teamMembers);
 
-            var request = new AssignTaskToTeamMemberCommand()
+            var request = new AssignWorkItemToTeamMemberCommand()
             {
-                TaskId = PickRandomElement(tasks).Id,
+                WorkItemId = PickRandomElement(workItems).Id,
                 TeamMemberId = teamMemberToRemove.Id
             };
 
             //Remove the chosen element from the list to ensure it will fail
             teamMembers.Remove(teamMemberToRemove);
 
-            applicationDbContext.Setup(context => context.TaskItems).Returns(tasks);
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMembers);
 
             //Act
@@ -88,34 +88,34 @@ namespace TaskManager.Api.Application.Tests.Tasks.Commands.AssignTaskToTeamMembe
         [InlineAutoMoqData]
         [InlineAutoMoqData]
         [InlineAutoMoqData]
-        [Theory(DisplayName = "Should Throw Task Not Found Exception")]
-        public void Should_Throw_If_Task_Not_Found(
-            List<TaskItem> tasks,
+        [Theory(DisplayName = "Should Throw WorkItem Not Found Exception")]
+        public void Should_Throw_If_WorkItem_Not_Found(
+            List<WorkItem> workItems,
             List<TeamMember> teamMembers,
             CancellationTokenSource cancellationSource,
             [Frozen] Mock<IApplicationDbContext> applicationDbContext,
-            AssignTaskToTeamMemberCommandHandler sut)
+            AssignWorkItemToTeamMemberCommandHandler sut)
         {
             //Arrange
-            var taskToRemove = PickRandomElement(tasks);
+            var workItemToRemove = PickRandomElement(workItems);
 
-            var request = new AssignTaskToTeamMemberCommand()
+            var request = new AssignWorkItemToTeamMemberCommand()
             {
-                TaskId = taskToRemove.Id,
+                WorkItemId = workItemToRemove.Id,
                 TeamMemberId = PickRandomElement(teamMembers).Id
             };
 
             //Remove the chosen element from the list to ensure it will fail
-            tasks.Remove(taskToRemove);
+            workItems.Remove(workItemToRemove);
 
-            applicationDbContext.Setup(context => context.TaskItems).Returns(tasks);
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMembers);
 
             //Act
             Func<Task> action = () => sut.Handle(request, cancellationSource.Token);
 
             //Assert
-            action.Should().Throw<NotFoundException>("because the task does not exist");
+            action.Should().Throw<NotFoundException>("because the workitem does not exist");
         }
     }
 }

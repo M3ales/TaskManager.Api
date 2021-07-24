@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskManager.Api.Domain.Entities
 {
-    public class TaskItem
+    public class WorkItem
     {
         public int Id { get; set; }
         public TeamMember AssignedTo { get; set; }

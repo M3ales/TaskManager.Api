@@ -11,7 +11,7 @@ namespace TaskManager.Api.Application.Common.Interfaces
     public interface IApplicationDbContext
     {
         ICollection<TeamMember> TeamMembers { get; }
-        ICollection<TaskItem> TaskItems { get; }
+        ICollection<WorkItem> WorkItems { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

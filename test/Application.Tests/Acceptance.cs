@@ -21,7 +21,7 @@ namespace TaskManager.Api.Application.Tests
     public class Acceptance
     {
         [Fact]
-        public void Should_Modify_Progress_Of_Task()
+        public void Should_Modify_Progress_Of_WorkItem()
         {
             //Arrange
 
@@ -30,7 +30,7 @@ namespace TaskManager.Api.Application.Tests
             //Assert
         }
         [Fact]
-        public void Should_Show_Progress_Of_Task()
+        public void Should_Show_Progress_Of_WorkItem()
         {
             //Arrange
 
@@ -40,7 +40,7 @@ namespace TaskManager.Api.Application.Tests
         }
         
         [Fact]
-        public void Should_Add_Tasks()
+        public void Should_Add_WorkItems()
         {
             //Arrange
 
@@ -49,7 +49,7 @@ namespace TaskManager.Api.Application.Tests
             //Assert
         }
         [Fact]
-        public void Should_Modify_Tasks()
+        public void Should_Modify_WorkItems()
         {
             //Arrange
 
@@ -58,7 +58,7 @@ namespace TaskManager.Api.Application.Tests
             //Assert
         }
         [Fact]
-        public void Should_Remove_Tasks()
+        public void Should_Remove_WorkItems()
         {
             //Arrange
 
