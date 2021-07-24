@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,31 +13,27 @@ using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.WorkItems.Queries.GetWorkItem
 {
-    public class GetWorkItemQuery : IRequest<WorkItemDto>
+    public class GetWorkItemQuery : IRequest<ShallowWorkItemDto>
     {
         public int Id { get; set; }
     }
 
-    public class GetWorkItemQueryHandler : IRequestHandler<GetWorkItemQuery, WorkItemDto>
+    public class GetWorkItemQueryHandler : IRequestHandler<GetWorkItemQuery, ShallowWorkItemDto>
     {
         private readonly IApplicationDbContext _applicationDbContext;
-        public GetWorkItemQueryHandler(IApplicationDbContext applicationDbContext)
+        private readonly IMapper _mapper;
+        public GetWorkItemQueryHandler(IApplicationDbContext applicationDbContext, IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
+            _mapper = mapper;
+
         }
-        public Task<WorkItemDto> Handle(GetWorkItemQuery request, CancellationToken cancellationToken)
+        public Task<ShallowWorkItemDto> Handle(GetWorkItemQuery request, CancellationToken cancellationToken)
         {
             var item = _applicationDbContext.WorkItems
                 .Where(workItem => workItem.Id == request.Id)
                 .FirstOrDefault() ?? throw new NotFoundException(nameof(WorkItem), request.Id);
-
-            return Task.FromResult(new WorkItemDto()
-            {
-                Id = item.Id,
-                AssignedTo = item.AssignedTo?.Id,
-                Description = item.Description,
-                Name = item.Name
-            });
+            return Task.FromResult(_mapper.Map<ShallowWorkItemDto>(item));
         }
     }
 }

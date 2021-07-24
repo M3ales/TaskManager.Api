@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.Api.Application.Common.Mappings;
+using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.WorkItems.Queries.Common
 {
-    public class WorkItemDto
+    public class ShallowWorkItemDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

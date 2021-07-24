@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using AutoMapper;
 using FluentAssertions;
 using Moq;
 using System;
@@ -27,6 +28,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetWorkItem
         public async Task Should_Get_WorkItem(
             CancellationTokenSource cancellationSource,
             [Frozen] Mock<IApplicationDbContext> applicationDbContext,
+            IMapper mapper,
             List<WorkItem> workItems,
             GetWorkItemQueryHandler sut,
             GetWorkItemQuery request
@@ -41,13 +43,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetWorkItem
             var result = await sut.Handle(request, cancellationSource.Token);
 
             //Assert
-            result.Should().BeEquivalentTo(new WorkItemDto()
-            {
-                Id = selected.Id,
-                Name = selected.Name,
-                Description = selected.Description,
-                AssignedTo = selected.AssignedTo?.Id,
-            }, "because it should return the equivalent of the requested work item as a DTO");
+            result.Should().BeEquivalentTo(mapper.Map<ShallowWorkItemDto>(selected), "because it should return the equivalent of the requested work item as a DTO");
         }
 
         [AutoMoqData]
@@ -73,7 +69,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetWorkItem
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             //Act
-            Func<Task<WorkItemDto>> action = () => sut.Handle(request, cancellationSource.Token);
+            Func<Task<ShallowWorkItemDto>> action = () => sut.Handle(request, cancellationSource.Token);
 
             //Assert
             action.Should().Throw<NotFoundException>("because the specified WorkItem does not exist");
