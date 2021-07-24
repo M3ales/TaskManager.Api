@@ -29,7 +29,7 @@ namespace TaskManager.Api.Application.Tasks.Commands.AssignTaskToTeamMember
             // Going to pretend its hot path code and do a https://stackoverflow.com/questions/8663897/why-is-linq-wherepredicate-first-faster-than-firstpredicate
             var task = _applicationDbContext.TaskItems
                 .Where(task => task.Id == request.TaskId)
-                .First();
+                .FirstOrDefault() ?? throw new NotFoundException(nameof(TaskItem), request.TaskId);
             var teamMember = _applicationDbContext.TeamMembers
                 .Where(teamMember => teamMember.Id == request.TeamMemberId)
                 .FirstOrDefault() ?? throw new NotFoundException(nameof(TeamMember), request.TeamMemberId);

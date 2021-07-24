@@ -87,5 +87,40 @@ namespace TaskManager.Api.Application.Tests.Tasks.Commands.AssignTaskToTeamMembe
             //Assert
             action.Should().Throw<NotFoundException>("because the team member does not exist");
         }
+
+        [AutoMoqData]
+        [InlineAutoMoqData]
+        [InlineAutoMoqData]
+        [InlineAutoMoqData]
+        [InlineAutoMoqData]
+        [Theory(DisplayName = "Should Throw Task Not Found Exception")]
+        public void Should_Throw_If_Task_Not_Found(
+            List<TaskItem> tasks,
+            List<TeamMember> teamMembers,
+            CancellationTokenSource cancellationSource,
+            [Frozen] Mock<IApplicationDbContext> applicationDbContext,
+            AssignTaskToTeamMemberCommandHandler sut)
+        {
+            //Arrange
+            var taskToRemove = PickRandomElement(tasks);
+
+            var request = new AssignTaskToTeamMemberCommand()
+            {
+                TaskId = taskToRemove.Id,
+                TeamMemberId = PickRandomElement(teamMembers).Id
+            };
+
+            //Remove the chosen element from the list to ensure it will fail
+            tasks.Remove(taskToRemove);
+
+            applicationDbContext.Setup(context => context.TaskItems).Returns(tasks);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMembers);
+
+            //Act
+            Func<Task> action = () => sut.Handle(request, cancellationSource.Token);
+
+            //Assert
+            action.Should().Throw<NotFoundException>("because the task does not exist");
+        }
     }
 }
