@@ -15,7 +15,7 @@ using TaskManager.Api.Application.WorkItems.Commands.DeleteWorkItem;
 using TaskManager.Api.Domain.Entities;
 using Xunit;
 
-namespace TaskManager.Api.Application.Tests.WorkItems.Commands.DeleteWorkItem
+namespace TaskManager.Api.Application.Tests.WorkItems.Commands
 {
     public class DeleteWorkItemCommandTests : TestBase
     {

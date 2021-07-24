@@ -14,7 +14,7 @@ using TaskManager.Api.Application.WorkItems.Commands.CreateWorkItem;
 using TaskManager.Api.Domain.Entities;
 using Xunit;
 
-namespace TaskManager.Api.Application.Tests.WorkItems.Commands.CreateWorkItem
+namespace TaskManager.Api.Application.Tests.WorkItems.Commands
 {
     public class CreateWorkItemCommandTests : TestBase
     {

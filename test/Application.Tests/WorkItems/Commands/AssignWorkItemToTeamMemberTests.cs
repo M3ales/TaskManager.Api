@@ -11,7 +11,7 @@ using TaskManager.Api.Application.WorkItems.Commands.AssignWorkItemToTeamMember;
 using TaskManager.Api.Domain.Entities;
 using Xunit;
 
-namespace TaskManager.Api.Application.Tests.WorkItems.Commands.AssignWorkItemToTeamMember
+namespace TaskManager.Api.Application.Tests.WorkItems.Commands
 {
     public class AssignWorkItemToTeamMemberTests : TestBase
     {
