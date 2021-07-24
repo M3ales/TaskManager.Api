@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TaskManager.Api.Application.Common.Exceptions;
 using TaskManager.Api.Application.Common.Interfaces;
+using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.Tasks.Commands.AssignTaskToTeamMember
 {
@@ -30,7 +32,7 @@ namespace TaskManager.Api.Application.Tasks.Commands.AssignTaskToTeamMember
                 .First();
             var teamMember = _applicationDbContext.TeamMembers
                 .Where(teamMember => teamMember.Id == request.TeamMemberId)
-                .First();
+                .FirstOrDefault() ?? throw new NotFoundException(nameof(TeamMember), request.TeamMemberId);
             task.AssignedTo = teamMember;
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
             return Unit.Value;

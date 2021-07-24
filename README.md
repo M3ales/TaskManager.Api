@@ -12,4 +12,4 @@ A demonstration of my workflow process on a sample project.
 
 - I've elected to try my hand at the `test-first` approach for this project. It led to some running around a little clueless on how to start and how far to define by base abstraction.
 
-Time Spent: 3 hours.
+Time Spent: 4 hours.
