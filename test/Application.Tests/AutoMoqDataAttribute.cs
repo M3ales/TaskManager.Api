@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoMoq;
 using AutoFixture.Community.AutoMapper;
+using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
 using AutoMapper;
 using System;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Api.Application.Common.Mappings;
 using TaskManager.Api.Application.WorkItems.Queries.Common;
+using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.Tests
 {
@@ -28,6 +30,10 @@ namespace TaskManager.Api.Application.Tests
                 x.AddProfile(new MappingProfile());
                 x.AddProfile(new ShallowWorkItemDtoMappingProfile());
             }));
+            fixture.Customizations.Add(
+            new Omitter(
+                new EqualRequestSpecification(
+                    typeof(WorkItem).GetProperty(nameof(WorkItem.ProgressItems)))));
             return fixture;
         })
         { }

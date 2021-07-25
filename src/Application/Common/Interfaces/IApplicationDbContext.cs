@@ -12,6 +12,7 @@ namespace TaskManager.Api.Application.Common.Interfaces
     {
         ICollection<TeamMember> TeamMembers { get; }
         ICollection<WorkItem> WorkItems { get; }
+        ICollection<ProgressItem> ProgressItems { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
