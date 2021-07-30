@@ -1,0 +1,19 @@
+{
+  "x-generator": "NSwag v13.12.1.0 (NJsonSchema v10.4.6.0 (Newtonsoft.Json v9.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "TaskManager Api",
+    "description": "A simple task management example implementation",
+    "termsOfService": "None",
+    "contact": {
+      "name": "M3ales",
+      "url": "https://github.com/m3ales",
+      "email": ""
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/M3ales/TaskManager.Api/blob/master/LICENSE"
+    },
+    "version": "v1"
+  }
+}
