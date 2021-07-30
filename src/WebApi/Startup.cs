@@ -1,3 +1,4 @@
+using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using TaskManager.Api.Application;
 
 namespace WebApi
 {
@@ -26,13 +28,15 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication();
+            services.AddIntrastructure();
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
                     //Enums as strings (readability)
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 }); ;
-            services.AddSwaggerDocument(config =>
+            services.AddOpenApiDocument(config =>
             {
                 config.PostProcess = document =>
                 {
