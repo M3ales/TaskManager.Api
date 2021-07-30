@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AutoMapper;
 using FluentAssertions;
+using MockQueryable.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,13 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetWorkItem
             //Arrange
             var selected = PickRandomElement(workItems);
             request.Id = selected.Id;
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
+
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
 
             //Act
             var result = await sut.Handle(request, cancellationSource.Token);
@@ -65,7 +72,13 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetWorkItem
             var toRemove = workItems.First();
             request.Id = toRemove.Id;
             workItems.Remove(toRemove);
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
+
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             //Act

@@ -1,8 +1,10 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
+using MockQueryable.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TaskManager.Api.Application.Common.Exceptions;
@@ -34,8 +36,18 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
                 WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id,
                 TeamMemberId = PickRandomElement(teamMembers, out int teamMemberIndex).Id
             };
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMembers);
+
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var teamMemberSet = teamMembers
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
             applicationDbContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(0))
                 .Verifiable("Must persist the changes to database");
@@ -73,8 +85,17 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             //Remove the chosen element from the list to ensure it will fail
             teamMembers.Remove(teamMemberToRemove);
 
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMembers);
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var teamMemberSet = teamMembers
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
 
             //Act
             Func<Task> action = () => sut.Handle(request, cancellationSource.Token);
@@ -108,8 +129,17 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             //Remove the chosen element from the list to ensure it will fail
             workItems.Remove(workItemToRemove);
 
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMembers);
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var teamMemberSet = teamMembers
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
 
             //Act
             Func<Task> action = () => sut.Handle(request, cancellationSource.Token);

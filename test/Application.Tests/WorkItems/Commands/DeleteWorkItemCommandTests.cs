@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
 using MediatR;
+using MockQueryable.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,13 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
         {
             //Arrange
             request.Id = workItems.First().Id;
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
+
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             //Act
@@ -63,7 +70,13 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
         {
             //Arrange
             request.Id = workItems.First().Id;
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
+
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             //Act
@@ -92,7 +105,13 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             var toRemove = workItems.First();
             request.Id = toRemove.Id;
             workItems.Remove(toRemove);
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
+
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             //Act

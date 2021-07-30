@@ -1,5 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
+using MockQueryable.Moq;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,17 @@ namespace TaskManager.Api.Application.Tests.ProgressItems.Commands
             var progressItems = new List<ProgressItem>();
             request.WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id;
 
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItems);
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var progressItemSet = progressItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(progressItems.Count);
 
@@ -61,8 +71,17 @@ namespace TaskManager.Api.Application.Tests.ProgressItems.Commands
             request.WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id;
             var progressItems = new List<ProgressItem>();
 
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItems);
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var progressItemSet = progressItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(progressItems.Count)
                 .Callback(() =>
@@ -95,8 +114,17 @@ namespace TaskManager.Api.Application.Tests.ProgressItems.Commands
             //Arrange
             request.WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id;
 
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItems);
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var progressItemSet = progressItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(progressItems.Count);
 
@@ -124,8 +152,17 @@ namespace TaskManager.Api.Application.Tests.ProgressItems.Commands
             var progressItems = new List<ProgressItem>();
             request.WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id;
 
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItems);
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var progressItemSet = progressItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(progressItems.Count);
 

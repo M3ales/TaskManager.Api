@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using AutoMapper;
 using FluentAssertions;
+using MockQueryable.Moq;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,12 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetAllWorkItems
              )
         {
             //Arrange
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
+
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
 
             //Act
             var result = await sut.Handle(request, cancellationSource.Token);

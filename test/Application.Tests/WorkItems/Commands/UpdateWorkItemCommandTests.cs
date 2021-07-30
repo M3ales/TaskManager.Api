@@ -2,6 +2,7 @@
 using AutoMapper;
 using FluentAssertions;
 using MediatR;
+using MockQueryable.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -37,8 +38,19 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
         {
             //Arrange
             request.Updated.Id = PickRandomElement(workItems).Id;
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.TeamMembers).Returns(new List<TeamMember>() { new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } });
+
+            var workItemSet = workItems
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var teamMemberSet = new List<TeamMember>() {
+                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } }
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(applicationDbContext.Object.WorkItems.Count);
 
             //Act
@@ -63,8 +75,19 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
                )
         {
             //Arrange
-            applicationDbContext.Setup(context => context.WorkItems).Returns(new List<WorkItem>() { new WorkItem() { Id = request.Updated.Id + 1 } });
-            applicationDbContext.Setup(context => context.TeamMembers).Returns(new List<TeamMember>() { new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } });
+            var workItemSet = new List<WorkItem>() { 
+                new WorkItem() { Id = request.Updated.Id + 1 } }
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var teamMemberSet = new List<TeamMember>() {
+                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } }
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
 
             //Act
             Func<Task<ShallowWorkItemDto>> result = () => sut.Handle(request, cancellationSource.Token);
@@ -83,13 +106,21 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
         public void Should_Throw_TeamMember_Not_Found(
             CancellationTokenSource cancellationSource,
             [Frozen] Mock<IApplicationDbContext> applicationDbContext,
+            List<WorkItem> workItems,
             UpdateWorkItemCommandHandler sut,
             UpdateWorkItemCommand request
             )
         {
             //Arrange
-            applicationDbContext.Setup(context => context.WorkItems).Returns(new List<WorkItem>());
-            applicationDbContext.Setup(context => context.TeamMembers).Returns(new List<TeamMember>() { new TeamMember() { Id = request.Updated.AssignedTo + 1 ?? 0 } });
+            var workItemSet = workItems.AsQueryable().BuildMockDbSet().Object;
+            var teamMemberSet = new List<TeamMember>() {
+                new TeamMember() { Id = request.Updated.AssignedTo + 1 ?? 0 } }
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
 
             //Act
             Func<Task<ShallowWorkItemDto>> result = () => sut.Handle(request, cancellationSource.Token);
@@ -115,8 +146,16 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
         {
             //Arrange
             request.Updated.Id = PickRandomElement(workItems).Id;
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.TeamMembers).Returns(new List<TeamMember>() { new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } });
+
+            var workItemSet = workItems.AsQueryable().BuildMockDbSet().Object;
+            var teamMemberSet = new List<TeamMember>() {
+                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } }
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(applicationDbContext.Object.WorkItems.Count);
 
             //Act
@@ -137,14 +176,25 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
             CancellationTokenSource cancellationSource,
             [Frozen] Mock<IApplicationDbContext> applicationDbContext,
             List<WorkItem> workItems,
+            List<TeamMember> teamMembers,
             UpdateWorkItemCommandHandler sut,
             UpdateWorkItemCommand request
             )
         {
             //Arrange
             request.Updated.Id = PickRandomElement(workItems).Id;
-            applicationDbContext.Setup(context => context.WorkItems).Returns(workItems);
-            applicationDbContext.Setup(context => context.TeamMembers).Returns(new List<TeamMember>() { new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } });
+            request.Updated.AssignedTo = null;
+
+            var workItemSet = workItems.AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+            var teamMemberSet = teamMembers
+                .AsQueryable()
+                .BuildMockDbSet()
+                .Object;
+
+            applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
+            applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(applicationDbContext.Object.WorkItems.Count);
 
             //Act
