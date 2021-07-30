@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,9 @@ namespace TaskManager.Api.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        ICollection<TeamMember> TeamMembers { get; }
-        ICollection<WorkItem> WorkItems { get; }
-        ICollection<ProgressItem> ProgressItems { get; }
+        DbSet<TeamMember> TeamMembers { get; }
+        DbSet<WorkItem> WorkItems { get; }
+        DbSet<ProgressItem> ProgressItems { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
