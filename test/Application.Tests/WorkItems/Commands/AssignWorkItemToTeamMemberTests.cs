@@ -37,14 +37,8 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
                 TeamMemberId = PickRandomElement(teamMembers, out int teamMemberIndex).Id
             };
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
-            var teamMemberSet = teamMembers
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);

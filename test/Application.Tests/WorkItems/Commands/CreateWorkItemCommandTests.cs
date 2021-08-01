@@ -34,10 +34,9 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             )
         {
             //Arrange
-            var workItemSet = new List<WorkItem>()
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItems = new List<WorkItem>();
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+
             var teamMemberSet = new List<TeamMember>() {
                 new TeamMember() { Id = request.AssignedTo + 1 ?? 0 } }
                 .AsQueryable()
@@ -77,10 +76,8 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
                 request.AssignedTo = null;
             }
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+
             var teamMemberSet = new List<TeamMember>() {
                 new TeamMember() { Id = request.AssignedTo ?? 0 } }
                 .AsQueryable()
@@ -119,10 +116,8 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             //Arrange
             var workItems = new List<WorkItem>();
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+
             var teamMemberSet = new List<TeamMember>() {
                 new TeamMember() { Id = request.AssignedTo ?? 0 } }
                 .AsQueryable()
@@ -157,10 +152,8 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             //Arrange
             var workItems = new List<WorkItem>();
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+
             var teamMemberSet = new List<TeamMember>() {
                 new TeamMember() { Id = request.AssignedTo ?? 0 } }
                 .AsQueryable()
@@ -196,10 +189,8 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             request.AssignedTo = null;
             var workItems = new List<WorkItem>();
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+
             var teamMemberSet = new List<TeamMember>()
                 .AsQueryable()
                 .BuildMockDbSet()

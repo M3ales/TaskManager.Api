@@ -32,14 +32,8 @@ namespace TaskManager.Api.Application.Tests.ProgressItems.Commands
             var progressItems = new List<ProgressItem>();
             request.WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id;
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
-            var progressItemSet = progressItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
@@ -71,14 +65,8 @@ namespace TaskManager.Api.Application.Tests.ProgressItems.Commands
             request.WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id;
             var progressItems = new List<ProgressItem>();
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
-            var progressItemSet = progressItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
@@ -114,14 +102,8 @@ namespace TaskManager.Api.Application.Tests.ProgressItems.Commands
             //Arrange
             request.WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id;
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
-            var progressItemSet = progressItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
@@ -152,14 +134,8 @@ namespace TaskManager.Api.Application.Tests.ProgressItems.Commands
             var progressItems = new List<ProgressItem>();
             request.WorkItemId = PickRandomElement(workItems, out int workItemIndex).Id;
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
-            var progressItemSet = progressItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);

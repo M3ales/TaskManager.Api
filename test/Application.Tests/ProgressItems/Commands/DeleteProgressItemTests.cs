@@ -1,7 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using FluentAssertions;
 using MediatR;
-using MockQueryable.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ using Xunit;
 
 namespace TaskManager.Api.Application.Tests.WorkItems.Commands
 {
-    public class DeleteProgressItemTests
+    public class DeleteProgressItemTests : TestBase
     {
         [AutoMoqData]
         [InlineAutoMoqData]
@@ -36,10 +35,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             //Arrange
             request.Id = progressItems.First().Id;
 
-            var progressItemSet = progressItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
 
             applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
@@ -69,10 +65,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             //Arrange
             request.Id = progressItems.First().Id;
 
-            var progressItemSet = progressItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
 
             applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
@@ -104,10 +97,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             request.Id = toRemove.Id;
             progressItems.Remove(toRemove);
 
-            var progressItemSet = progressItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
 
             applicationDbContext.Setup(context => context.ProgressItems).Returns(progressItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
