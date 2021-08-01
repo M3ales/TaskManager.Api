@@ -1,9 +1,5 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TaskManager.Api.Application.WorkItems.Commands.CreateWorkItem;
 using TaskManager.Api.Application.WorkItems.Commands.DeleteWorkItem;
@@ -18,14 +14,25 @@ namespace WebApi.Controllers
     {
         [HttpGet("all")]
         public async Task<ActionResult<List<ShallowWorkItemDto>>> Get() => await Mediator.Send(new GetAllWorkItemsQuery());
-        [HttpGet]
-        public async Task<ActionResult<ShallowWorkItemDto>> Get([FromQuery] GetWorkItemQuery request) => await Mediator.Send(request);
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ShallowWorkItemDto>> Get([FromRoute] GetWorkItemQuery request) => await Mediator.Send(request);
 
         [HttpPost]
         public async Task<ActionResult<int>> Create([FromBody] CreateWorkItemCommand request) => await Mediator.Send(request);
 
         [HttpPut]
         public async Task<ActionResult<ShallowWorkItemDto>> Update([FromBody] UpdateWorkItemCommand request) => await Mediator.Send(request);
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ShallowWorkItemDto>> Update([FromRoute]int id, [FromBody] UpdateWorkItemCommand request)
+        {
+            if (id != request?.Updated?.Id)
+            {
+                return BadRequest();
+            }
+            return await Mediator.Send(request);
+        }
 
         [HttpDelete]
         public async Task<ActionResult> Delete([FromBody] DeleteWorkItemCommand request)

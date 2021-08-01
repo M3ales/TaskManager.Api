@@ -25,4 +25,11 @@ A demonstration of my workflow process on a sample project.
 - This caused issues as I didn't know how complicated mocking DbSet would be. This lead to large refactors and the use of a glue library in the mean time. Jason Taylor makes use of Integration Tests to do this instead which is arguably a more elegant solution. The other option would to have a repository layer that I could mock the db sets into collections with but it'd create some hard coupling between db fetch logic and the command/query layer. Lesser of two evils problem.
 - For now I'll limit tests to the command/query layer as expanding the tests is proving to be very time consuming on first setup. They should be near zero cost once a template exists but a from scratch build means its just too much time to ask for.
 
-Time Spent: 20 hours.
+## Difficulties
+
+- EFCore's DbSet&lt;T&gt; concrete type is difficult to mock correctly.
+- Tests needed to be refactored because of DbSet issue, it reduced their readability.
+- Having tests impacted the turn around time significantly. But I am far more confident about the behaviour of the codebase.
+
+
+Time Spent: 23 hours.
