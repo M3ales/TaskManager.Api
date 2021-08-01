@@ -38,7 +38,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             };
 
             var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
-            var progressItemSet = BuildFunctionalDbSetMockFor(progressItems).Object;
+            var teamMemberSet = BuildFunctionalDbSetMockFor(teamMembers).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
