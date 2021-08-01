@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TaskManager.Api.Application.Common.Interfaces;
 using TaskManager.Api.Domain.Entities;
+using TaskManager.Api.Domain.Entities.Auth;
 
 namespace Infrastructure.Persistence
 {
@@ -19,6 +20,10 @@ namespace Infrastructure.Persistence
         public DbSet<WorkItem> WorkItems { get; set; }
 
         public DbSet<ProgressItem> ProgressItems { get; set; }
+
+        public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<Claim> Claims { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

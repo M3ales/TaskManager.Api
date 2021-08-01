@@ -20,4 +20,12 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authentication\Common\" />
+    <Folder Include="TeamMembers\Commands\CreateTeamMemberCommand\" />
+    <Folder Include="TeamMembers\Commands\DeleteTeamMemberCommand\" />
+    <Folder Include="TeamMembers\Commands\UpdateTeamMemberCommand\" />
+    <Folder Include="TeamMembers\Queries\GetTeamMembersQuery\" />
+  </ItemGroup>
+
 </Project>
