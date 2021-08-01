@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TaskManager.Api.Application;
+using WebApi.Filters;
 
 namespace WebApi
 {
@@ -36,6 +37,15 @@ namespace WebApi
                     //Enums as strings (readability)
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 }); ;
+
+            services.AddControllersWithViews(options =>
+                options.Filters.Add<ApiExceptionFilterAttribute>())
+                    .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddOpenApiDocument(config =>
             {
                 config.PostProcess = document =>
@@ -63,7 +73,9 @@ namespace WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseStaticFiles(); 
+
             app.UseOpenApi();
+
             app.UseSwaggerUi3(config => {
                 config.Path = "/api";
                 config.EnableTryItOut = true;
@@ -74,6 +86,8 @@ namespace WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
 
