@@ -15,7 +15,7 @@ using TaskManager.Api.Application.WorkItems.Queries.GetWorkItem;
 using TaskManager.Api.Domain.Entities;
 using Xunit;
 
-namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetWorkItem
+namespace TaskManager.Api.Application.Tests.WorkItems.Queries
 {
     public class GetWorkItemQueryTests : TestBase
     {

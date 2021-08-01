@@ -13,7 +13,7 @@ using TaskManager.Api.Application.WorkItems.Queries.GetAllWorkItems;
 using TaskManager.Api.Domain.Entities;
 using Xunit;
 
-namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetAllWorkItems
+namespace TaskManager.Api.Application.Tests.WorkItems.Queries
 {
     public class GetAllWorkItemsQueryTests : TestBase
     {
