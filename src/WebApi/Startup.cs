@@ -1,4 +1,6 @@
+using FluentValidation.AspNetCore;
 using Infrastructure;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -41,10 +43,14 @@ namespace WebApi
             services.AddControllersWithViews(options =>
                 options.Filters.Add<ApiExceptionFilterAttribute>())
                     .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<ApplicationDbContext>();
 
             services.AddOpenApiDocument(config =>
             {
