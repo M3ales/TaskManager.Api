@@ -31,5 +31,4 @@ A demonstration of my workflow process on a sample project.
 - Tests needed to be refactored because of DbSet issue, it reduced their readability.
 - Having tests impacted the turn around time significantly. But I am far more confident about the behaviour of the codebase.
 
-
 Time Spent: 23 hours.
