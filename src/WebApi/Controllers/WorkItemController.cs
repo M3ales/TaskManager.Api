@@ -13,7 +13,7 @@ namespace WebApi.Controllers
     public class WorkItemController : ApiControllerBase
     {
         [HttpGet("all")]
-        public async Task<ActionResult<List<ShallowWorkItemDto>>> Get([FromQuery]GetAllWorkItemsQuery request) => await Mediator.Send(request);
+        public async Task<ActionResult<List<ShallowWorkItemDto>>> Get() => await Mediator.Send(new GetAllWorkItemsQuery());
         [HttpGet]
         public async Task<ActionResult<ShallowWorkItemDto>> Get([FromQuery] GetWorkItemQuery request) => await Mediator.Send(request);
     }
