@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskManager.Api.Domain.Entities;
 
-namespace TaskManager.Api.Application.WorkItems.Queries.Common
+namespace TaskManager.Api.Application.WorkItems.Common
 {
     public class ShallowWorkItemDtoMappingProfile : Profile
     {

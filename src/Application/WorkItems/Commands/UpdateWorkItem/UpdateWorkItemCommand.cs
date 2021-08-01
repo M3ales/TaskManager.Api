@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TaskManager.Api.Application.Common.Exceptions;
 using TaskManager.Api.Application.Common.Interfaces;
-using TaskManager.Api.Application.WorkItems.Queries.Common;
+using TaskManager.Api.Application.WorkItems.Common;
 using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.WorkItems.Commands.UpdateWorkItem

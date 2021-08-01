@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TaskManager.Api.Application.WorkItems.Commands.CreateWorkItem;
 using TaskManager.Api.Application.WorkItems.Commands.DeleteWorkItem;
 using TaskManager.Api.Application.WorkItems.Commands.UpdateWorkItem;
-using TaskManager.Api.Application.WorkItems.Queries.Common;
+using TaskManager.Api.Application.WorkItems.Common;
 using TaskManager.Api.Application.WorkItems.Queries.GetAllWorkItems;
 using TaskManager.Api.Application.WorkItems.Queries.GetWorkItem;
 

@@ -4,7 +4,7 @@ using TaskManager.Api.Application.ProgressItems.Commands.AddProgressItemToWorkIt
 using TaskManager.Api.Application.WorkItems.Commands.CreateWorkItem;
 using TaskManager.Api.Application.WorkItems.Commands.DeleteWorkItem;
 using TaskManager.Api.Application.WorkItems.Commands.UpdateWorkItem;
-using TaskManager.Api.Application.WorkItems.Queries.Common;
+using TaskManager.Api.Application.WorkItems.Common;
 
 namespace WebApi.Controllers
 {
