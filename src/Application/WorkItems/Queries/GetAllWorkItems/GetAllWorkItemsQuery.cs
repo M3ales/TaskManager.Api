@@ -17,7 +17,6 @@ namespace TaskManager.Api.Application.WorkItems.Queries.GetAllWorkItems
 {
     public class GetAllWorkItemsQuery : IRequest<List<ShallowWorkItemDto>>
     {
-        public int Id { get; set; }
     }
 
     public class GetAllWorkItemsQueryHandler : IRequestHandler<GetAllWorkItemsQuery, List<ShallowWorkItemDto>>
