@@ -32,9 +32,10 @@ namespace TaskManager.Api.Application.WorkItems.Commands.UpdateWorkItem
                 .FirstOrDefault() ?? throw new NotFoundException(nameof(WorkItem), request.Updated.Id);
             workItem.Name = request.Updated.Name;
             workItem.Description = request.Updated.Description;
-            workItem.AssignedTo = _applicationDbContext.TeamMembers
-                .Where(teamMember => teamMember.Id == request.Updated.AssignedTo)
-                .FirstOrDefault() ?? throw new NotFoundException(nameof(TeamMember), request.Updated.Id);
+            if(request.Updated.AssignedTo is not null)
+                workItem.AssignedTo = _applicationDbContext.TeamMembers
+                    .Where(teamMember => teamMember.Id == request.Updated.AssignedTo)
+                    .FirstOrDefault() ?? throw new NotFoundException(nameof(TeamMember), request.Updated.AssignedTo);
             await _applicationDbContext.SaveChangesAsync(cancellationToken);
             return _mapper.Map<ShallowWorkItemDto>(workItem);
         }
