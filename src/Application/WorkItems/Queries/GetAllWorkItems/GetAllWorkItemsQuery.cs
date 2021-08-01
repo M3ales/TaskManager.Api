@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,8 @@ namespace TaskManager.Api.Application.WorkItems.Queries.GetAllWorkItems
             return Task.FromResult(
                 _applicationDbContext
                     .WorkItems
-                    .AsQueryable()
+                    .AsNoTracking()
+                    .Include(workItem => workItem.ProgressItems)
                     .ProjectTo<ShallowWorkItemDto>(_mapper.ConfigurationProvider)
                     .ToList());
         }

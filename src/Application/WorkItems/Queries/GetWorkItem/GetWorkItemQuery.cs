@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace TaskManager.Api.Application.WorkItems.Queries.GetWorkItem
         public Task<ShallowWorkItemDto> Handle(GetWorkItemQuery request, CancellationToken cancellationToken)
         {
             var item = _applicationDbContext.WorkItems
+                .Include(workItem => workItem.ProgressItems)
                 .Where(workItem => workItem.Id == request.Id)
                 .FirstOrDefault() ?? throw new NotFoundException(nameof(WorkItem), request.Id);
             return Task.FromResult(_mapper.Map<ShallowWorkItemDto>(item));
