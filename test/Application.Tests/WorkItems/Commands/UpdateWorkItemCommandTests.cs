@@ -39,15 +39,12 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
             //Arrange
             request.Updated.Id = PickRandomElement(workItems).Id;
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
-            var teamMemberSet = new List<TeamMember>() {
-                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } }
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var teamMembers = new List<TeamMember>() {
+                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 }
+            };
+
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var teamMemberSet = BuildFunctionalDbSetMockFor(teamMembers).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
@@ -75,16 +72,13 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
                )
         {
             //Arrange
-            var workItemSet = new List<WorkItem>() { 
-                new WorkItem() { Id = request.Updated.Id + 1 } }
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
-            var teamMemberSet = new List<TeamMember>() {
-                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } }
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItems = new List<WorkItem>();
+            var teamMembers = new List<TeamMember>() {
+                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 }
+            };
+
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var teamMemberSet = BuildFunctionalDbSetMockFor(teamMembers).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
@@ -112,12 +106,13 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
             )
         {
             //Arrange
-            var workItemSet = workItems.AsQueryable().BuildMockDbSet().Object;
-            var teamMemberSet = new List<TeamMember>() {
-                new TeamMember() { Id = request.Updated.AssignedTo + 1 ?? 0 } }
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+
+            var teamMembers = new List<TeamMember>() {
+                new TeamMember() { Id = request.Updated.AssignedTo + 1 ?? 0 }
+            };
+
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var teamMemberSet = BuildFunctionalDbSetMockFor(teamMembers).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
@@ -147,12 +142,13 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
             //Arrange
             request.Updated.Id = PickRandomElement(workItems).Id;
 
-            var workItemSet = workItems.AsQueryable().BuildMockDbSet().Object;
-            var teamMemberSet = new List<TeamMember>() {
-                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 } }
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+
+            var teamMembers = new List<TeamMember>() {
+                new TeamMember() { Id = request.Updated.AssignedTo ?? 0 }
+            };
+
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var teamMemberSet = BuildFunctionalDbSetMockFor(teamMembers).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);
@@ -185,13 +181,8 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
             request.Updated.Id = PickRandomElement(workItems).Id;
             request.Updated.AssignedTo = null;
 
-            var workItemSet = workItems.AsQueryable()
-                .BuildMockDbSet()
-                .Object;
-            var teamMemberSet = teamMembers
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+            var teamMemberSet = BuildFunctionalDbSetMockFor(teamMembers).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.TeamMembers).Returns(teamMemberSet);

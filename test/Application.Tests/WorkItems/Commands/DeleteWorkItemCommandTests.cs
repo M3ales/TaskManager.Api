@@ -37,11 +37,8 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
         {
             //Arrange
             request.Id = workItems.First().Id;
-
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
@@ -71,10 +68,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             //Arrange
             request.Id = workItems.First().Id;
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
@@ -106,10 +100,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands
             request.Id = toRemove.Id;
             workItems.Remove(toRemove);
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);

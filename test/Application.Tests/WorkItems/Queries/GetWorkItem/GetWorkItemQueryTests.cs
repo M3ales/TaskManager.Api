@@ -39,10 +39,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetWorkItem
             var selected = PickRandomElement(workItems);
             request.Id = selected.Id;
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
 
@@ -73,10 +70,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetWorkItem
             request.Id = toRemove.Id;
             workItems.Remove(toRemove);
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
 
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
             applicationDbContext.Setup(context => context.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);

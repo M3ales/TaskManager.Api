@@ -15,7 +15,7 @@ using Xunit;
 
 namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetAllWorkItems
 {
-    public class GetAllWorkItemsQueryTests
+    public class GetAllWorkItemsQueryTests : TestBase
     {
         [AutoMoqData]
         [InlineAutoMoqData]
@@ -35,10 +35,8 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Queries.GetAllWorkItems
         {
             //Arrange
 
-            var workItemSet = workItems
-                .AsQueryable()
-                .BuildMockDbSet()
-                .Object;
+            var workItemSet = BuildFunctionalDbSetMockFor(workItems).Object;
+
             applicationDbContext.Setup(context => context.WorkItems).Returns(workItemSet);
 
             //Act
