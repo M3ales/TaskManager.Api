@@ -32,6 +32,10 @@ namespace TaskManager.Api.Application.Tests
                 .Callback<TEntity>(input => underlyingDataset.Add(input));
 
             workItemMock
+                .Setup(set => set.AsNoTracking())
+                .Returns(underlyingDataset.AsQueryable());
+
+            workItemMock
                 .Setup(set => set.Remove(It.IsAny<TEntity>()))
                 .Callback<TEntity>(input => underlyingDataset.Remove(input));
 
