@@ -8,7 +8,6 @@ using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.WorkItems.Commands.CreateWorkItem
 {
-
     public class CreateWorkItemCommand : IRequest<int>
     {
         public string Name { get; set; }

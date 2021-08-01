@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManager.Api.Application.Common.Mappings;
-using TaskManager.Api.Domain.Entities;
+﻿using System.Collections.Generic;
 using TaskManager.Api.Application.ProgressItems.Common;
 
 namespace TaskManager.Api.Application.WorkItems.Common

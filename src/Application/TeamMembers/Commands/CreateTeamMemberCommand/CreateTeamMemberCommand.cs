@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TaskManager.Api.Application.Common.Interfaces;
-using TaskManager.Api.Application.TeamMembers.Common;
 using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.TeamMembers.Commands.CreateTeamMemberCommand
