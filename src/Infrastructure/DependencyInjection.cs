@@ -1,10 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TaskManager.Api.Application.Common.Interfaces;
 
 namespace Infrastructure
 {
@@ -12,6 +9,8 @@ namespace Infrastructure
     {
         public static IServiceCollection AddIntrastructure(this IServiceCollection services)
         {
+            services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("CleanArchitectureDb"));
             return services;
         }
     }

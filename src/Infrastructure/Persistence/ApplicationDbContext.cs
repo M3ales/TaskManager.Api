@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,10 +13,18 @@ namespace Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        public DbSet<TeamMember> TeamMembers => throw new NotImplementedException();
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public DbSet<TeamMember> TeamMembers { get; set; }
 
-        public DbSet<WorkItem> WorkItems => throw new NotImplementedException();
+        public DbSet<WorkItem> WorkItems { get; set; }
 
-        public DbSet<ProgressItem> ProgressItems => throw new NotImplementedException();
+        public DbSet<ProgressItem> ProgressItems { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            base.OnModelCreating(builder);
+        }
     }
 }
