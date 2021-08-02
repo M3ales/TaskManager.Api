@@ -38,6 +38,7 @@ namespace TaskManager.Api.Application.Tests.WorkItems.Commands.UpdateWorkItem
         {
             //Arrange
             request.Updated.Id = PickRandomElement(workItems).Id;
+            request.Updated.ProgressItems = new();
 
             var teamMembers = new List<TeamMember>() {
                 new TeamMember() { Id = request.Updated.AssignedTo ?? 0 }
