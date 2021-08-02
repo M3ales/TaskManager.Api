@@ -2,6 +2,7 @@
 using System.Reflection;
 using MediatR;
 using FluentValidation;
+using TaskManager.Api.Application.Common.Behaviours;
 
 namespace TaskManager.Api.Application
 {
@@ -12,6 +13,8 @@ namespace TaskManager.Api.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorisationBehaviour<,>));
             return services;
         }
     }

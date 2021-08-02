@@ -31,7 +31,11 @@ namespace Infrastructure.Authentication
 				?? throw new NotFoundException("Token", refreshToken);
 			
 			return Task.FromResult(GenerateToken(account, 3600));
-        }
+		}
+		public Task<bool> ValidateJwtAsync(string jwt, CancellationToken cancellationToken)
+		{
+			return Task.FromResult(ValidateCurrentToken(jwt));
+		}
 
 		public string GenerateToken(Account account, int validForSeconds)
 		{
@@ -66,8 +70,8 @@ namespace Infrastructure.Authentication
 			var mySecret = "wesfaeioj12j3pk;akDAs;m12dmasdm2km";
 			var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(mySecret));
 
-			var myIssuer = "http://mysite.com";
-			var myAudience = "http://myaudience.com";
+			var myIssuer = "TaskManager.Api";
+			var myAudience = "TaskManager.Api";
 
 			var tokenHandler = new JwtSecurityTokenHandler();
 			try

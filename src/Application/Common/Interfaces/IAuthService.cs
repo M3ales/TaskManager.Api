@@ -10,5 +10,6 @@ namespace TaskManager.Api.Application.Common.Interfaces
     public interface IAuthService
     {
         Task<string> AuthenticateAsync(string refreshToken, CancellationToken cancellationToken);
+        bool ValidateCurrentToken(string token);
     }
 }

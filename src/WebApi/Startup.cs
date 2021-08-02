@@ -15,7 +15,9 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TaskManager.Api.Application;
+using TaskManager.Api.Application.Common.Interfaces;
 using WebApi.Filters;
+using WebApi.Services;
 
 namespace WebApi
 {
@@ -34,6 +36,7 @@ namespace WebApi
             services.AddApplication();
             services.AddIntrastructure();
             services.AddTransient<ApplicationDbContext>(); // To run seed
+            services.AddSingleton<IRequestJwtService, HttpHeaderJwtService>();
 
             services.AddControllers()
                 .AddJsonOptions(options =>
