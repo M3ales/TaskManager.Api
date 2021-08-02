@@ -33,6 +33,8 @@ namespace WebApi
         {
             services.AddApplication();
             services.AddIntrastructure();
+            services.AddTransient<ApplicationDbContext>(); // To run seed
+
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
