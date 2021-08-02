@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NSwag.Generation.Processors.Security;
+using NSwag;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +79,15 @@ namespace WebApi
                         Url = "https://github.com/M3ales/TaskManager.Api/blob/master/LICENSE"
                     };
                 };
+                config.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Copy the provided token from POST /api/Auth"
+                });
+
+                config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
         }
 
