@@ -23,5 +23,10 @@ namespace TaskManager.Api.Application.Common.Attributes
         /// Gets or sets the policy name that determines access to the resource.
         /// </summary>
         public string Policy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the claims determine access to the resource.
+        /// </summary>
+        public string[] Claims { get; set; }
     }
 }

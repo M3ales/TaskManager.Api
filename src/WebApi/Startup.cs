@@ -84,7 +84,7 @@ namespace WebApi
                     Type = OpenApiSecuritySchemeType.ApiKey,
                     Name = "Authorization",
                     In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Copy the provided token from POST /api/Auth"
+                    Description = "Copy the provided token from POST /api/auth/token"
                 });
 
                 config.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));

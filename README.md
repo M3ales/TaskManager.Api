@@ -31,4 +31,11 @@ A demonstration of my workflow process on a sample project.
 - Tests needed to be refactored because of DbSet issue, it reduced their readability.
 - Having tests impacted the turn around time significantly. But I am far more confident about the behaviour of the codebase.
 
-Time Spent: 28 hours.
+## Authentication and Authorization
+
+- POST your API Key to `/api/auth/token` to get a short lived jwt (3600 seconds) with which to do requests.
+- Include the key in your header, with or without the `Bearer` prefix.
+- You can easily do this from the generated Swagger Doc page at `/api` by clicking the Authorize lock button on the top right, and pasting your JWT there.
+- JWT at the moment is just a hardcoded key for private/public pair. Ideally this will be refactored out at some point.
+
+Time Spent: 29 hours.
