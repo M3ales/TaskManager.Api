@@ -3,6 +3,7 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TaskManager.Api.Application.Common.Attributes;
 using TaskManager.Api.Application.Common.Exceptions;
 using TaskManager.Api.Application.Common.Interfaces;
 using TaskManager.Api.Domain.Entities;
@@ -10,6 +11,7 @@ using TaskManager.Api.Domain.Entities;
 namespace TaskManager.Api.Application.ProgressItems.Commands.AddProgressItemToWorkItem
 {
 
+    [Authorise]
     public class AddProgressItemToWorkItemCommand : IRequest<int>
     {
         public int WorkItemId { get; set; }

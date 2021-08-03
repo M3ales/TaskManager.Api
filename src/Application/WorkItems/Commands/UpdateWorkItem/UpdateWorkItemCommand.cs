@@ -3,6 +3,7 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TaskManager.Api.Application.Common.Attributes;
 using TaskManager.Api.Application.Common.Exceptions;
 using TaskManager.Api.Application.Common.Interfaces;
 using TaskManager.Api.Application.WorkItems.Common;
@@ -10,6 +11,7 @@ using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.WorkItems.Commands.UpdateWorkItem
 {
+    [Authorise]
     public class UpdateWorkItemCommand : IRequest<ShallowWorkItemDto>
     {
         public ShallowWorkItemDto Updated { get; set; }

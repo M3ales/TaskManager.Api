@@ -13,7 +13,7 @@ using TaskManager.Api.Domain.Entities.Auth;
 
 namespace TaskManager.Api.Application.Authentication.Commands.Regenerate
 {
-    [Authorise(Claims = new string[] {"account:manage"})]
+    [Authorise]
     public class RegenerateCommand : IRequest<string>
     {
         public int AccountId { get; set; }

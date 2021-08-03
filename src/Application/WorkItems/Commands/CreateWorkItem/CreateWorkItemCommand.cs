@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TaskManager.Api.Application.Common.Attributes;
 using TaskManager.Api.Application.Common.Exceptions;
 using TaskManager.Api.Application.Common.Interfaces;
 using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.WorkItems.Commands.CreateWorkItem
 {
+    [Authorise]
     public class CreateWorkItemCommand : IRequest<int>
     {
         public string Name { get; set; }

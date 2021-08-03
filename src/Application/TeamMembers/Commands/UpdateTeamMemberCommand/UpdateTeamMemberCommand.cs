@@ -3,6 +3,7 @@ using MediatR;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using TaskManager.Api.Application.Common.Attributes;
 using TaskManager.Api.Application.Common.Exceptions;
 using TaskManager.Api.Application.Common.Interfaces;
 using TaskManager.Api.Application.TeamMembers.Common;
@@ -10,6 +11,7 @@ using TaskManager.Api.Domain.Entities;
 
 namespace TaskManager.Api.Application.TeamMembers.Commands.UpdateTeamMemberCommand
 {
+    [Authorise]
     public class UpdateTeamMemberCommand : ShallowTeamMemberDto, IRequest<ShallowTeamMemberDto> { }
     public class UpdateTeamMemberCommandHandler : IRequestHandler<UpdateTeamMemberCommand, ShallowTeamMemberDto>
     {
