@@ -12,6 +12,8 @@ A demonstration of my workflow process on a sample project.
 - Tasks can only be complete/not complete, but will contain progress items to track the progress of a task.
   - You can mark a task as complete but still have pending progress items.
 - Only the Manager and the team member who is assigned to a task can edit it or change progerss items.
+- This will be company internal only, and the data it contains will not be sensitive in nature.
+- An MVP that can scale is more useful than a complete solution over a longer time period.
 
 ## Architecture Choices
 
@@ -38,4 +40,21 @@ A demonstration of my workflow process on a sample project.
 - You can easily do this from the generated Swagger Doc page at `/api` by clicking the Authorize lock button on the top right, and pasting your JWT there.
 - JWT at the moment is just a hardcoded key for private/public pair. Ideally this will be refactored out at some point.
 
-Time Spent: 29 hours.
+## Learning Points
+
+- Test first is robust but requires significant infrastructure setup to produce tests that aren't overly repetative. It's possible that an even more developed infrastructure system may be better.
+- xUnit + AutoMoq + AutoFixture + DbSet = Uncertainty
+- Significantly better understanding of the pitfalls of this implementation of Clean Architecture, as well as the heavy coupling introduced by IApplicationDbContext.
+
+## Things I still want to do but haven't been able to get to
+
+- Extract the hardcoded keys out of the AuthService, and move it into either `appsettings.json` or environment variables.
+- Write tests for all the Commands and Queries I skipped due to time constraints.
+- Write integration tests for the authentication.
+- Write claims based authentication and allow for team members to be provided logins which allow them to only see the work they need to.
+- Write a way to map team members to accounts easily.
+- Filtering of progress information and perhaps some form of 'this past week' summary/dashboard feature.
+- Find a way to better mock DbSet or convert the commands and queries to integration tests (using full DI).
+- Write a SignalR or GRPC WebApi layer to illustrate modularity.
+
+Time Spent: 30 hours.
