@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TaskManager.Api.Application.ProgressItems.Commands.AddProgressItemToWorkItem;
+using TaskManager.Api.Application.ProgressItems.Commands.UpdateProgressItem;
 using TaskManager.Api.Application.WorkItems.Commands.CreateWorkItem;
 using TaskManager.Api.Application.WorkItems.Commands.DeleteWorkItem;
 using TaskManager.Api.Application.WorkItems.Commands.UpdateWorkItem;
@@ -17,6 +18,18 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<int>> Create([FromBody] AddProgressItemToWorkItemCommand request) => await Mediator.Send(request);
+
+        /// <summary>
+        /// Allows you to update the complete status of a task. You may not edit the name after creation.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] UpdateProgressItemCommand request)
+        {
+            await Mediator.Send(request);
+            return NoContent();
+        }
 
         /// <summary>
         /// Deletes a given progress item from it's linked work item
