@@ -27,6 +27,41 @@ A demonstration of my workflow process on a sample project.
 - This caused issues as I didn't know how complicated mocking DbSet would be. This lead to large refactors and the use of a glue library in the mean time. Jason Taylor makes use of Integration Tests to do this instead which is arguably a more elegant solution. The other option would to have a repository layer that I could mock the db sets into collections with but it'd create some hard coupling between db fetch logic and the command/query layer. Lesser of two evils problem.
 - For now I'll limit tests to the command/query layer as expanding the tests is proving to be very time consuming on first setup. They should be near zero cost once a template exists but a from scratch build means its just too much time to ask for.
 
+## How to use
+
+1. Clone
+```
+git clone https://github.com/M3ales/TaskManager.Api.git
+```
+2. Ensure WebApi is set as the Startup Project
+3. Run WebApi using the WebApi launch settings
+4. Navigate to `localhost:5001/api`
+5. Select the Auth expander
+6. Select Authenticate
+7. Click Try it Out (on the top right)
+8. Edit the request body from:
+```json
+{
+  "refreshToken": "string"
+}
+```
+to
+```json
+{
+  "refreshToken": "ASDF"
+}
+```
+9. Execute
+10. Copy the response body section (without "") ie.
+```jwt
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwibmJmIjoxNjI4MDM3NTk0LCJleHAiOjE2MjgwNDExOTQsImlhdCI6MTYyODAzNzU5NCwiaXNzIjoiVGFza01hbmFnZXIuQXBpIiwiYXVkIjoiVGFza01hbmFnZXIuQXBpIn0.yrolyQIkyme1nDYyIg7WYc9HKhErwAvlfW2bCgPa3pw
+```
+11. Scroll to the top of the page and on the top right click 'Authorize'.
+12. Paste the JWT and hit Authorize
+13. You now can perform any requests as an authenticated 'admin' user.
+
+Note if you regenerate the key and lose it you will not be able to recover it. In Memory DB means that it resets to `ASDF` every time you restart the application.
+
 ## Difficulties
 
 - EFCore's DbSet&lt;T&gt; concrete type is difficult to mock correctly.
@@ -56,5 +91,6 @@ A demonstration of my workflow process on a sample project.
 - Filtering of progress information and perhaps some form of 'this past week' summary/dashboard feature.
 - Find a way to better mock DbSet or convert the commands and queries to integration tests (using full DI).
 - Write a SignalR or GRPC WebApi layer to illustrate modularity.
+- Seed Data
 
 Time Spent: 30 hours.
