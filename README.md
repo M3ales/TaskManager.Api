@@ -91,6 +91,7 @@ Note if you regenerate the key and lose it you will not be able to recover it. I
 
 - Extract the hardcoded keys out of the AuthService, and move it into either `appsettings.json` or environment variables.
 - Write tests for all the Commands and Queries I skipped due to time constraints.
+- Validation (Fluent Validation + Exceptions are present but don't do anything)
 - Write integration tests for the authentication.
 - Write claims based authentication and allow for team members to be provided logins which allow them to only see the work they need to.
 - Write a way to map team members to accounts easily.
