@@ -27,12 +27,18 @@ A demonstration of my workflow process on a sample project.
 - This caused issues as I didn't know how complicated mocking DbSet would be. This lead to large refactors and the use of a glue library in the mean time. Jason Taylor makes use of Integration Tests to do this instead which is arguably a more elegant solution. The other option would to have a repository layer that I could mock the db sets into collections with but it'd create some hard coupling between db fetch logic and the command/query layer. Lesser of two evils problem.
 - For now I'll limit tests to the command/query layer as expanding the tests is proving to be very time consuming on first setup. They should be near zero cost once a template exists but a from scratch build means its just too much time to ask for.
 
+## Requirements
+
+Copy of Visual Studio, VS Code, or `dotnet cli`.
+The project is .NET 5, so you'll need the SDK to be installed.
+
 ## How to use
 
 1. Clone
-```
+```bash
 git clone https://github.com/M3ales/TaskManager.Api.git
 ```
+
 2. Ensure WebApi is set as the Startup Project
 3. Run WebApi using the WebApi launch settings
 4. Navigate to `localhost:5001/api`
